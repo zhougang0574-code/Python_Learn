@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python 学习指南 · Java 开发者版</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #222637;
+      --border: #2e3347;
+      --accent: #5b8af0;
+      --accent2: #7c5bf0;
+      --green: #4ade80;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --code-bg: #13151f;
+      --java: #f89820;
+      --python: #3776ab;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 280px;
+      min-width: 280px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 0 0 24px;
+      z-index: 100;
+    }
+
+    #sidebar-header {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 1;
+    }
+
+    #sidebar-header h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    #sidebar-header p {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    .nav-section { margin-top: 8px; }
+
+    .nav-section-title {
+      padding: 8px 20px 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 20px;
+      font-size: 13px;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all .15s;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--surface2);
+      border-left-color: var(--accent);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(91,138,240,.08);
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 9px;
+      font-weight: 600;
+    }
+
+    .badge-done  { background: rgba(74,222,128,.15); color: var(--green); }
+    .badge-wip   { background: rgba(251,191,36,.15);  color: var(--yellow); }
+    .badge-todo  { background: rgba(148,163,184,.1);  color: var(--text-dim); }
+
+    /* ── Main ── */
+    #main {
+      margin-left: 280px;
+      flex: 1;
+      max-width: 900px;
+      padding: 48px 48px 80px;
+    }
+
+    /* ── Page header ── */
+    .page-hero {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-hero .tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(91,138,240,.12);
+      border: 1px solid rgba(91,138,240,.25);
+      border-radius: 4px;
+      padding: 2px 10px;
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .page-hero p {
+      margin-top: 12px;
+      color: var(--text-dim);
+      font-size: 16px;
+    }
+
+    /* ── Sections ── */
+    .chapter {
+      margin-bottom: 64px;
+      scroll-margin-top: 24px;
+    }
+
+    .chapter-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .chapter h2 {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .chapter h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 28px 0 12px;
+      color: var(--text);
+      padding-left: 12px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .chapter p {
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 12px;
+    }
+
+    /* ── Compare ── */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .compare-side {
+      background: var(--code-bg);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .compare-label {
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .label-java   { background: rgba(248,152,32,.15); color: var(--java); }
+    .label-python { background: rgba(55,118,171,.2);  color: #60a5fa; }
+
+    .compare-side pre {
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+
+    /* ── Code block ── */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-lang {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .code-block pre {
+      padding: 16px;
+      font-size: 13.5px;
+      line-height: 1.65;
+      overflow-x: auto;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    }
+
+    /* Syntax colors */
+    .kw  { color: #c792ea; }  /* keywords */
+    .fn  { color: #82aaff; }  /* functions */
+    .st  { color: #c3e88d; }  /* strings */
+    .cm  { color: #546e7a; font-style: italic; }  /* comments */
+    .nb  { color: #ffcb6b; }  /* numbers */
+    .cl  { color: #f78c6c; }  /* class names */
+    .dc  { color: #89ddff; }  /* decorators / special */
+
+    /* ── Info boxes ── */
+    .info-box {
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-size: 14px;
+      border-left: 3px solid;
+    }
+
+    .info-tip    { background: rgba(74,222,128,.07);  border-color: var(--green);  color: #86efac; }
+    .info-warn   { background: rgba(251,191,36,.07);  border-color: var(--yellow); color: #fde68a; }
+    .info-note   { background: rgba(91,138,240,.08);  border-color: var(--accent); color: #93c5fd; }
+    .info-java   { background: rgba(248,152,32,.07);  border-color: var(--java);   color: #fdba74; }
+
+    .info-box strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* ── Table ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 12px 0;
+    }
+
+    .data-table th {
+      background: var(--surface2);
+      color: var(--text-dim);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,.02); }
+
+    /* ── Outline TOC ── */
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .toc-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all .15s;
+    }
+
+    .toc-item:hover {
+      border-color: var(--accent);
+      background: rgba(91,138,240,.06);
+    }
+
+    .toc-item-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent);
+      min-width: 22px;
+      padding-top: 1px;
+    }
+
+    .toc-item-body { flex: 1; }
+    .toc-item-title { font-size: 14px; font-weight: 600; }
+    .toc-item-sub   { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+    /* ── Status pill ── */
+    .status { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; }
+    .status::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+    .status-done  { color: var(--green);  } .status-done::before  { background: var(--green); }
+    .status-wip   { color: var(--yellow); } .status-wip::before   { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+    .status-todo  { color: var(--text-dim);} .status-todo::before  { background: var(--text-dim); }
+
+    /* ── Progress bar ── */
+    .progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 8px 0 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 900px) {
+      #sidebar { display: none; }
+      #main { margin-left: 0; padding: 24px 20px; }
+      .compare { grid-template-columns: 1fr; }
+      .toc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ SIDEBAR ══════════════════ -->
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>🐍 Python 学习指南</h2>
+    <p>Java 开发者转型版</p>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">进度总览</div>
+    <a href="#overview" class="nav-link active">📋 全局大纲</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 1 · 已完成</div>
+    <a href="#ch1" class="nav-link">01 · 环境 &amp; 基础语法 <span class="nav-badge badge-done">完成</span></a>
+    <a href="#ch2" class="nav-link">02 · 数据类型 &amp; 结构 <span class="nav-badge badge-done">完成</span></a>
+    <a href="#ch3" class="nav-link">03 · 控制流 <span class="nav-badge badge-done">完成</span></a>
+    <a href="#ch4" class="nav-link">04 · 函数 <span class="nav-badge badge-done">完成</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 2 · 待更新</div>
+    <a href="#" class="nav-link">05 · 面向对象编程 <span class="nav-badge badge-todo">待写</span></a>
+    <a href="#" class="nav-link">06 · 模块 &amp; 包 <span class="nav-badge badge-todo">待写</span></a>
+    <a href="#" class="nav-link">07 · 文件 &amp; IO <span class="nav-badge badge-todo">待写</span></a>
+    <a href="#" class="nav-link">08 · 异常处理 <span class="nav-badge badge-todo">待写</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 3 · 待更新</div>
+    <a href="#" class="nav-link">09 · 高级特性 <span class="nav-badge badge-todo">待写</span></a>
+    <a href="#" class="nav-link">10 · 常用标准库 <span class="nav-badge badge-todo">待写</span></a>
+    <a href="#" class="nav-link">11 · 异步编程 <span class="nav-badge badge-todo">待写</span></a>
+    <a href="#" class="nav-link">12 · LangChain 实战 <span class="nav-badge badge-todo">待写</span></a>
+  </div>
+</nav>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main id="main">
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <span class="tag">Java → Python · LangChain 方向</span>
+    <h1>Python 学习指南</h1>
+    <p>专为 Java 开发者设计，通过 Java/Python 对比帮助你快速上手，最终掌握 LangChain 开发。</p>
+    <div style="margin-top:16px; display:flex; gap:16px; flex-wrap:wrap;">
+      <span class="status status-done">Part 1 已完成（第 1-4 章）</span>
+      <span class="status status-todo">Part 2 待更新（第 5-8 章）</span>
+      <span class="status status-todo">Part 3 待更新（第 9-12 章）</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:33%"></div></div>
+    <p style="font-size:12px;color:var(--text-dim)">整体进度 33% · 4 / 12 章</p>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <section class="chapter" id="overview">
+    <div class="chapter-header">
+      <div class="chapter-num">📋</div>
+      <h2>全局大纲</h2>
+    </div>
+    <p>完整的 12 章学习路径，按难度和实用性排列。</p>
+
+    <div class="toc-grid">
+      <a href="#ch1" class="toc-item">
+        <span class="toc-item-num">01</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">环境 &amp; 基础语法</div>
+          <div class="toc-item-sub">安装配置 · 缩进规则 · 变量 · 注释 · 类型系统概览</div>
+        </div>
+      </a>
+      <a href="#ch2" class="toc-item">
+        <span class="toc-item-num">02</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">数据类型 &amp; 集合</div>
+          <div class="toc-item-sub">str · list · tuple · dict · set · 类型转换</div>
+        </div>
+      </a>
+      <a href="#ch3" class="toc-item">
+        <span class="toc-item-num">03</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">控制流</div>
+          <div class="toc-item-sub">if/elif/else · for · while · 推导式入门</div>
+        </div>
+      </a>
+      <a href="#ch4" class="toc-item">
+        <span class="toc-item-num">04</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">函数</div>
+          <div class="toc-item-sub">def · 多返回值 · *args/**kwargs · lambda · 装饰器</div>
+        </div>
+      </a>
+      <a href="#" class="toc-item" style="opacity:.5">
+        <span class="toc-item-num">05</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">面向对象编程</div>
+          <div class="toc-item-sub">class · 继承 · 多态 · 魔法方法 · dataclass</div>
+        </div>
+      </a>
+      <a href="#" class="toc-item" style="opacity:.5">
+        <span class="toc-item-num">06</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">模块 &amp; 包管理</div>
+          <div class="toc-item-sub">import · pip · venv · __init__.py · 包结构</div>
+        </div>
+      </a>
+      <a href="#" class="toc-item" style="opacity:.5">
+        <span class="toc-item-num">07</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">文件 &amp; IO</div>
+          <div class="toc-item-sub">open · with 语句 · json · pathlib · csv</div>
+        </div>
+      </a>
+      <a href="#" class="toc-item" style="opacity:.5">
+        <span class="toc-item-num">08</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">异常处理</div>
+          <div class="toc-item-sub">try/except/finally · 自定义异常 · 上下文管理器</div>
+        </div>
+      </a>
+      <a href="#" class="toc-item" style="opacity:.5">
+        <span class="toc-item-num">09</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">高级特性</div>
+          <div class="toc-item-sub">列表推导式 · 生成器 · 迭代器 · 闭包 · 类型注解</div>
+        </div>
+      </a>
+      <a href="#" class="toc-item" style="opacity:.5">
+        <span class="toc-item-num">10</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">常用标准库</div>
+          <div class="toc-item-sub">os · sys · datetime · collections · functools · re</div>
+        </div>
+      </a>
+      <a href="#" class="toc-item" style="opacity:.5">
+        <span class="toc-item-num">11</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">异步编程</div>
+          <div class="toc-item-sub">async/await · asyncio · 事件循环 · 并发模型</div>
+        </div>
+      </a>
+      <a href="#" class="toc-item" style="opacity:.5">
+        <span class="toc-item-num">12</span>
+        <div class="toc-item-body">
+          <div class="toc-item-title">LangChain 实战</div>
+          <div class="toc-item-sub">Chain · Prompt · Memory · Agent · RAG 构建</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ CH1: 环境 & 基础语法 ══ -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-num">01</div>
+      <h2>环境 &amp; 基础语法</h2>
+    </div>
+
+    <h3>1.1 环境安装</h3>
+    <p>推荐使用虚拟环境隔离项目依赖，等同于 Java 的 Maven/Gradle 作用域隔离。</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">PowerShell / Terminal</span>
+      </div>
+      <pre><span class="cm"># 1. 安装 Python（官网 python.org 下载 3.11+）</span>
+python --version          <span class="cm"># 验证安装</span>
+
+<span class="cm"># 2. 创建虚拟环境（类似 Java 项目的隔离 classpath）</span>
+python -m venv .venv
+
+<span class="cm"># 3. 激活虚拟环境</span>
+.venv\Scripts\activate    <span class="cm"># Windows</span>
+source .venv/bin/activate <span class="cm"># macOS / Linux</span>
+
+<span class="cm"># 4. 安装依赖（类似 Maven pom.xml 中 dependency）</span>
+pip install langchain openai
+
+<span class="cm"># 5. 导出依赖清单（类似 pom.xml）</span>
+pip freeze > requirements.txt
+pip install -r requirements.txt  <span class="cm"># 恢复依赖</span></pre>
+    </div>
+
+    <h3>1.2 Python vs Java 核心差异</h3>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>特性</th>
+          <th>Java</th>
+          <th>Python</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>类型系统</td>
+          <td>静态强类型，编译期检查</td>
+          <td>动态类型，运行期检查（支持类型注解）</td>
+        </tr>
+        <tr>
+          <td>语句结束</td>
+          <td>分号 <code>;</code></td>
+          <td>换行（无分号）</td>
+        </tr>
+        <tr>
+          <td>代码块</td>
+          <td>花括号 <code>{ }</code></td>
+          <td>缩进（4 个空格，强制）</td>
+        </tr>
+        <tr>
+          <td>访问修饰符</td>
+          <td><code>public / private / protected</code></td>
+          <td>约定：<code>_private</code> / <code>__name_mangling</code></td>
+        </tr>
+        <tr>
+          <td>主入口</td>
+          <td><code>public static void main(String[] args)</code></td>
+          <td><code>if __name__ == "__main__":</code></td>
+        </tr>
+        <tr>
+          <td>null 值</td>
+          <td><code>null</code></td>
+          <td><code>None</code></td>
+        </tr>
+        <tr>
+          <td>字符串</td>
+          <td><code>"hello"</code>（双引号）</td>
+          <td><code>"hello"</code> 或 <code>'hello'</code> 均可</td>
+        </tr>
+        <tr>
+          <td>布尔值</td>
+          <td><code>true / false</code></td>
+          <td><code>True / False</code>（首字母大写）</td>
+        </tr>
+        <tr>
+          <td>打印输出</td>
+          <td><code>System.out.println()</code></td>
+          <td><code>print()</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>1.3 变量 &amp; 基本输出</h3>
+    <p>Python 变量无需声明类型，赋值即创建。</p>
+
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-label label-java">☕ Java</div>
+        <pre><span class="kw">String</span> name = <span class="st">"Alice"</span>;
+<span class="kw">int</span> age = <span class="nb">28</span>;
+<span class="kw">double</span> score = <span class="nb">99.5</span>;
+<span class="kw">boolean</span> active = <span class="kw">true</span>;
+
+System.out.println(
+  <span class="st">"姓名: "</span> + name +
+  <span class="st">", 年龄: "</span> + age
+);</pre>
+      </div>
+      <div class="compare-side">
+        <div class="compare-label label-python">🐍 Python</div>
+        <pre>name = <span class="st">"Alice"</span>
+age = <span class="nb">28</span>
+score = <span class="nb">99.5</span>
+active = <span class="kw">True</span>
+
+<span class="cm"># f-string（推荐，类似 Java 15+ 的文本块）</span>
+<span class="fn">print</span>(<span class="st">f"姓名: {name}, 年龄: {age}"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="info-box info-tip">
+      <strong>💡 Python 特色</strong>
+      f-string 是 Python 3.6+ 的字符串插值语法，性能好、可读性强，优先使用它而非 <code>+</code> 拼接或 <code>.format()</code>。
+    </div>
+
+    <h3>1.4 注释 &amp; 文档字符串</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre><span class="cm"># 单行注释（用 # 号）</span>
+
+<span class="kw">def</span> <span class="fn">add</span>(a, b):
+    <span class="st">"""
+    多行文档字符串（docstring）
+    等同于 Java 的 Javadoc。
+
+    Args:
+        a: 第一个加数
+        b: 第二个加数
+    Returns:
+        两数之和
+    """</span>
+    <span class="kw">return</span> a + b</pre>
+    </div>
+
+    <h3>1.5 程序入口</h3>
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-label label-java">☕ Java</div>
+        <pre><span class="kw">public class</span> <span class="cl">Main</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        System.out.println(<span class="st">"Hello"</span>);
+    }
+}</pre>
+      </div>
+      <div class="compare-side">
+        <div class="compare-label label-python">🐍 Python</div>
+        <pre><span class="kw">def</span> <span class="fn">main</span>():
+    <span class="fn">print</span>(<span class="st">"Hello"</span>)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    <span class="fn">main</span>()</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CH2: 数据类型 ══ -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-num">02</div>
+      <h2>数据类型 &amp; 集合</h2>
+    </div>
+
+    <h3>2.1 基本类型</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre><span class="cm"># int：任意精度（不会像 Java int 溢出）</span>
+x = <span class="nb">100</span>
+big = <span class="nb">10</span> ** <span class="nb">100</span>    <span class="cm"># 谷歌数，Python 原生支持</span>
+
+<span class="cm"># float</span>
+pi = <span class="nb">3.14</span>
+
+<span class="cm"># bool（是 int 的子类，True==1, False==0）</span>
+flag = <span class="kw">True</span>
+
+<span class="cm"># str（不可变，类似 Java String）</span>
+s = <span class="st">"hello"</span>
+
+<span class="cm"># None（类似 Java null）</span>
+val = <span class="kw">None</span>
+
+<span class="cm"># 查看类型</span>
+<span class="fn">print</span>(<span class="fn">type</span>(x))      <span class="cm"># &lt;class 'int'&gt;</span>
+<span class="fn">print</span>(<span class="fn">isinstance</span>(x, <span class="kw">int</span>))  <span class="cm"># True</span></pre>
+    </div>
+
+    <h3>2.2 字符串（str）常用操作</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre>s = <span class="st">"Hello, Python!"</span>
+
+<span class="cm"># 切片（Java 无原生切片语法）</span>
+s[<span class="nb">0</span>:<span class="nb">5</span>]        <span class="cm"># "Hello"</span>
+s[<span class="nb">-7</span>:]        <span class="cm"># "Python!"（负索引从末尾数）</span>
+s[::<span class="nb">-1</span>]       <span class="cm"># "!nohtyP ,olleH"（反转）</span>
+
+<span class="cm"># 常用方法</span>
+s.upper()       <span class="cm"># "HELLO, PYTHON!"</span>
+s.lower()       <span class="cm"># "hello, python!"</span>
+s.replace(<span class="st">"Python"</span>, <span class="st">"World"</span>)  <span class="cm"># "Hello, World!"</span>
+s.split(<span class="st">","</span>)   <span class="cm"># ["Hello", " Python!"]</span>
+s.strip()       <span class="cm"># 去首尾空白（类似 Java trim()）</span>
+s.startswith(<span class="st">"Hello"</span>)  <span class="cm"># True</span>
+<span class="fn">len</span>(s)          <span class="cm"># 14（类似 Java s.length()）</span>
+
+<span class="cm"># f-string 高级用法</span>
+name, price = <span class="st">"商品A"</span>, <span class="nb">19.9</span>
+<span class="fn">print</span>(<span class="st">f"{name} 售价: {price:.2f} 元"</span>)  <span class="cm"># 格式化小数</span>
+
+<span class="cm"># 多行字符串</span>
+prompt = <span class="st">"""
+你是一个助手，
+请帮我分析以下内容：
+"""</span>  <span class="cm"># LangChain 中 Prompt 常用此写法</span></pre>
+    </div>
+
+    <h3>2.3 列表（list）— 对应 Java ArrayList</h3>
+
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-label label-java">☕ Java ArrayList</div>
+        <pre>List&lt;String&gt; list =
+  <span class="kw">new</span> ArrayList&lt;&gt;();
+list.add(<span class="st">"apple"</span>);
+list.add(<span class="st">"banana"</span>);
+list.get(<span class="nb">0</span>);        <span class="cm">// "apple"</span>
+list.size();        <span class="cm">// 2</span>
+list.remove(<span class="nb">0</span>);
+list.contains(<span class="st">"banana"</span>);</pre>
+      </div>
+      <div class="compare-side">
+        <div class="compare-label label-python">🐍 Python list</div>
+        <pre>lst = [<span class="st">"apple"</span>, <span class="st">"banana"</span>]
+lst.append(<span class="st">"cherry"</span>)
+lst[<span class="nb">0</span>]           <span class="cm"># "apple"</span>
+<span class="fn">len</span>(lst)          <span class="cm"># 3</span>
+lst.remove(<span class="st">"apple"</span>)
+<span class="st">"banana"</span> <span class="kw">in</span> lst  <span class="cm"># True</span>
+
+<span class="cm"># 可混合类型（Java 需要泛型Object）</span>
+mixed = [<span class="nb">1</span>, <span class="st">"hello"</span>, <span class="kw">True</span>, <span class="kw">None</span>]</pre>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python — list 高频操作</span></div>
+      <pre>nums = [<span class="nb">3</span>, <span class="nb">1</span>, <span class="nb">4</span>, <span class="nb">1</span>, <span class="nb">5</span>, <span class="nb">9</span>]
+
+nums.sort()                 <span class="cm"># 原地排序 [1,1,3,4,5,9]</span>
+sorted(nums, reverse=<span class="kw">True</span>) <span class="cm"># 返回新列表，不修改原列表</span>
+
+nums.extend([<span class="nb">2</span>, <span class="nb">6</span>])        <span class="cm"># 批量追加（类似 addAll）</span>
+nums.insert(<span class="nb">0</span>, <span class="nb">99</span>)         <span class="cm"># 指定位置插入</span>
+nums.pop()                  <span class="cm"># 删除并返回最后一个</span>
+nums.pop(<span class="nb">0</span>)                 <span class="cm"># 删除并返回第0个</span>
+
+<span class="cm"># 切片</span>
+nums[<span class="nb">1</span>:<span class="nb">4</span>]                   <span class="cm"># 索引 1~3</span>
+nums[:]                     <span class="cm"># 浅拷贝（等价 list(nums)）</span>
+
+<span class="cm"># 列表推导式（Python 精髓，后续章节详讲）</span>
+squares = [x**<span class="nb">2</span> <span class="kw">for</span> x <span class="kw">in</span> nums]</pre>
+    </div>
+
+    <h3>2.4 元组（tuple）— 不可变列表</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre><span class="cm"># 元组不可修改，通常用于多返回值或固定数据</span>
+point = (<span class="nb">10</span>, <span class="nb">20</span>)
+x, y = point          <span class="cm"># 解包（Java 无原生支持）</span>
+
+<span class="cm"># 函数多返回值本质上是元组</span>
+<span class="kw">def</span> <span class="fn">min_max</span>(lst):
+    <span class="kw">return</span> <span class="fn">min</span>(lst), <span class="fn">max</span>(lst)
+
+lo, hi = <span class="fn">min_max</span>([<span class="nb">3</span>, <span class="nb">1</span>, <span class="nb">5</span>])  <span class="cm"># lo=1, hi=5</span></pre>
+    </div>
+
+    <h3>2.5 字典（dict）— 对应 Java HashMap</h3>
+
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-label label-java">☕ Java HashMap</div>
+        <pre>Map&lt;String,Integer&gt; m =
+  <span class="kw">new</span> HashMap&lt;&gt;();
+m.put(<span class="st">"a"</span>, <span class="nb">1</span>);
+m.get(<span class="st">"a"</span>);          <span class="cm">// 1</span>
+m.containsKey(<span class="st">"a"</span>);  <span class="cm">// true</span>
+m.keySet();
+m.values();
+m.entrySet();</pre>
+      </div>
+      <div class="compare-side">
+        <div class="compare-label label-python">🐍 Python dict</div>
+        <pre>d = {<span class="st">"a"</span>: <span class="nb">1</span>, <span class="st">"b"</span>: <span class="nb">2</span>}
+d[<span class="st">"a"</span>]                 <span class="cm"># 1</span>
+<span class="st">"a"</span> <span class="kw">in</span> d              <span class="cm"># True</span>
+d.keys()
+d.values()
+d.items()              <span class="cm"># [(key,value),...]</span>
+
+<span class="cm"># 安全取值（有默认值）</span>
+d.get(<span class="st">"c"</span>, <span class="nb">0</span>)         <span class="cm"># 0（key不存在时）</span></pre>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python — dict 高频操作</span></div>
+      <pre>user = {<span class="st">"name"</span>: <span class="st">"Alice"</span>, <span class="st">"age"</span>: <span class="nb">28</span>}
+
+<span class="cm"># 遍历</span>
+<span class="kw">for</span> key, val <span class="kw">in</span> user.items():
+    <span class="fn">print</span>(<span class="st">f"{key} = {val}"</span>)
+
+<span class="cm"># 合并字典（Python 3.9+）</span>
+extra = {<span class="st">"city"</span>: <span class="st">"Beijing"</span>}
+merged = user | extra
+
+<span class="cm"># 字典推导式</span>
+scores = {<span class="st">"math"</span>: <span class="nb">85</span>, <span class="st">"english"</span>: <span class="nb">92</span>, <span class="st">"python"</span>: <span class="nb">78</span>}
+passed = {k: v <span class="kw">for</span> k, v <span class="kw">in</span> scores.items() <span class="kw">if</span> v >= <span class="nb">80</span>}
+<span class="cm"># {"math": 85, "english": 92}</span></pre>
+    </div>
+
+    <div class="info-box info-note">
+      <strong>📌 LangChain 中最常用</strong>
+      dict 在 LangChain 中无处不在：<code>chain.invoke({"input": "你好"})</code>，消息格式 <code>{"role": "user", "content": "..."}</code> 都是 dict 结构。
+    </div>
+
+    <h3>2.6 集合（set）— 对应 Java HashSet</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre>s = {<span class="nb">1</span>, <span class="nb">2</span>, <span class="nb">3</span>, <span class="nb">2</span>, <span class="nb">1</span>}  <span class="cm"># {1, 2, 3} 自动去重</span>
+s.add(<span class="nb">4</span>)
+s.discard(<span class="nb">2</span>)         <span class="cm"># 删除（不存在不报错）</span>
+
+a = {<span class="nb">1</span>, <span class="nb">2</span>, <span class="nb">3</span>}
+b = {<span class="nb">2</span>, <span class="nb">3</span>, <span class="nb">4</span>}
+a & b    <span class="cm"># {2, 3}   交集</span>
+a | b    <span class="cm"># {1,2,3,4} 并集</span>
+a - b    <span class="cm"># {1}      差集</span></pre>
+    </div>
+  </section>
+
+  <!-- ══ CH3: 控制流 ══ -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-num">03</div>
+      <h2>控制流</h2>
+    </div>
+
+    <h3>3.1 条件判断</h3>
+
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-label label-java">☕ Java</div>
+        <pre><span class="kw">if</span> (score >= <span class="nb">90</span>) {
+    System.out.println(<span class="st">"A"</span>);
+} <span class="kw">else if</span> (score >= <span class="nb">60</span>) {
+    System.out.println(<span class="st">"B"</span>);
+} <span class="kw">else</span> {
+    System.out.println(<span class="st">"C"</span>);
+}</pre>
+      </div>
+      <div class="compare-side">
+        <div class="compare-label label-python">🐍 Python</div>
+        <pre><span class="kw">if</span> score >= <span class="nb">90</span>:
+    <span class="fn">print</span>(<span class="st">"A"</span>)
+<span class="kw">elif</span> score >= <span class="nb">60</span>:       <span class="cm"># elif 不是 else if</span>
+    <span class="fn">print</span>(<span class="st">"B"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"C"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python — 条件表达式（三元运算符）</span></div>
+      <pre><span class="cm"># Java: String result = score >= 60 ? "pass" : "fail";</span>
+result = <span class="st">"pass"</span> <span class="kw">if</span> score >= <span class="nb">60</span> <span class="kw">else</span> <span class="st">"fail"</span>
+
+<span class="cm"># 逻辑运算符用英文（不是 &&, ||, !）</span>
+<span class="kw">if</span> age >= <span class="nb">18</span> <span class="kw">and</span> active:   <span class="cm"># Java: age >= 18 && active</span>
+    <span class="fn">print</span>(<span class="st">"成年且活跃"</span>)
+
+<span class="kw">if</span> <span class="kw">not</span> active:             <span class="cm"># Java: !active</span>
+    <span class="fn">print</span>(<span class="st">"未激活"</span>)</pre>
+    </div>
+
+    <div class="info-box info-warn">
+      <strong>⚠️ 常见坑</strong>
+      Python 中 <code>0, "", [], {}, None</code> 都是 falsy（假值），可以直接 <code>if lst:</code> 判断列表是否非空，而不用 <code>if len(lst) > 0:</code>。
+    </div>
+
+    <h3>3.2 for 循环</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre><span class="cm"># 遍历列表（类似 Java for-each）</span>
+fruits = [<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cherry"</span>]
+<span class="kw">for</span> fruit <span class="kw">in</span> fruits:
+    <span class="fn">print</span>(fruit)
+
+<span class="cm"># range 生成数字序列（类似 Java for(int i=0; i&lt;5; i++)）</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">5</span>):       <span class="cm"># 0 1 2 3 4</span>
+    <span class="fn">print</span>(i)
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">1</span>, <span class="nb">6</span>):    <span class="cm"># 1 2 3 4 5</span>
+    <span class="fn">print</span>(i)
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">0</span>, <span class="nb">10</span>, <span class="nb">2</span>): <span class="cm"># 0 2 4 6 8（步长2）</span>
+    <span class="fn">print</span>(i)
+
+<span class="cm"># enumerate：同时获取索引和值</span>
+<span class="kw">for</span> idx, fruit <span class="kw">in</span> <span class="fn">enumerate</span>(fruits):
+    <span class="fn">print</span>(<span class="st">f"{idx}: {fruit}"</span>)
+
+<span class="cm"># zip：同时遍历多个列表</span>
+names = [<span class="st">"Alice"</span>, <span class="st">"Bob"</span>]
+ages  = [<span class="nb">28</span>, <span class="nb">32</span>]
+<span class="kw">for</span> name, age <span class="kw">in</span> <span class="fn">zip</span>(names, ages):
+    <span class="fn">print</span>(<span class="st">f"{name} is {age}"</span>)</pre>
+    </div>
+
+    <h3>3.3 while 循环</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre>n = <span class="nb">0</span>
+<span class="kw">while</span> n < <span class="nb">5</span>:
+    <span class="fn">print</span>(n)
+    n += <span class="nb">1</span>            <span class="cm"># Python 没有 n++ 语法！</span>
+
+<span class="cm"># for/while 的 else 子句（Java 无此特性）</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">5</span>):
+    <span class="kw">if</span> i == <span class="nb">3</span>:
+        <span class="kw">break</span>
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"循环正常结束（未触发break）"</span>)</pre>
+    </div>
+
+    <div class="info-box info-java">
+      <strong>☕ Java 开发者注意</strong>
+      Python 没有 <code>i++</code> / <code>i--</code>，请使用 <code>i += 1</code> / <code>i -= 1</code>。也没有 <code>switch</code>（Python 3.10+ 有 <code>match</code> 语句替代）。
+    </div>
+
+    <h3>3.4 match 语句（Python 3.10+，类似 switch）</h3>
+
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-label label-java">☕ Java switch</div>
+        <pre><span class="kw">switch</span> (status) {
+  <span class="kw">case</span> <span class="nb">200</span>: System.out.println(<span class="st">"OK"</span>); <span class="kw">break</span>;
+  <span class="kw">case</span> <span class="nb">404</span>: System.out.println(<span class="st">"Not Found"</span>); <span class="kw">break</span>;
+  <span class="kw">default</span>:  System.out.println(<span class="st">"Other"</span>);
+}</pre>
+      </div>
+      <div class="compare-side">
+        <div class="compare-label label-python">🐍 Python match</div>
+        <pre><span class="kw">match</span> status:
+    <span class="kw">case</span> <span class="nb">200</span>:
+        <span class="fn">print</span>(<span class="st">"OK"</span>)
+    <span class="kw">case</span> <span class="nb">404</span>:
+        <span class="fn">print</span>(<span class="st">"Not Found"</span>)
+    <span class="kw">case</span> _:           <span class="cm"># default</span>
+        <span class="fn">print</span>(<span class="st">"Other"</span>)</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CH4: 函数 ══ -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-num">04</div>
+      <h2>函数</h2>
+    </div>
+
+    <h3>4.1 函数定义 &amp; 多返回值</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre><span class="cm"># 基本函数</span>
+<span class="kw">def</span> <span class="fn">greet</span>(name: <span class="kw">str</span>) -> <span class="kw">str</span>:    <span class="cm"># 类型注解（可选，推荐写）</span>
+    <span class="kw">return</span> <span class="st">f"Hello, {name}!"</span>
+
+<span class="cm"># 多返回值（本质是 tuple 解包）</span>
+<span class="kw">def</span> <span class="fn">divmod_custom</span>(a, b):
+    <span class="kw">return</span> a // b, a % b         <span class="cm"># 返回商和余数</span>
+
+quotient, remainder = <span class="fn">divmod_custom</span>(<span class="nb">17</span>, <span class="nb">5</span>)
+<span class="cm"># quotient=3, remainder=2</span></pre>
+    </div>
+
+    <h3>4.2 参数类型</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python — 四种参数方式</span></div>
+      <pre><span class="cm"># 1. 默认参数（Java 通过方法重载实现）</span>
+<span class="kw">def</span> <span class="fn">connect</span>(host, port=<span class="nb">3306</span>, timeout=<span class="nb">30</span>):
+    <span class="fn">print</span>(<span class="st">f"连接 {host}:{port}, 超时 {timeout}s"</span>)
+
+<span class="fn">connect</span>(<span class="st">"localhost"</span>)               <span class="cm"># 用默认值</span>
+<span class="fn">connect</span>(<span class="st">"localhost"</span>, timeout=<span class="nb">60</span>)   <span class="cm"># 关键字参数，顺序无关</span>
+
+<span class="cm"># 2. *args：可变位置参数（类似 Java varargs）</span>
+<span class="kw">def</span> <span class="fn">sum_all</span>(*nums):                <span class="cm"># nums 是一个 tuple</span>
+    <span class="kw">return</span> <span class="fn">sum</span>(nums)
+
+<span class="fn">sum_all</span>(<span class="nb">1</span>, <span class="nb">2</span>, <span class="nb">3</span>, <span class="nb">4</span>)              <span class="cm"># 10</span>
+
+<span class="cm"># 3. **kwargs：可变关键字参数（传字典）</span>
+<span class="kw">def</span> <span class="fn">create_user</span>(**info):           <span class="cm"># info 是一个 dict</span>
+    <span class="fn">print</span>(info)
+
+<span class="fn">create_user</span>(name=<span class="st">"Alice"</span>, age=<span class="nb">28</span>, city=<span class="st">"BJ"</span>)
+<span class="cm"># {"name": "Alice", "age": 28, "city": "BJ"}</span>
+
+<span class="cm"># 4. 综合使用（LangChain 内部大量使用）</span>
+<span class="kw">def</span> <span class="fn">api_call</span>(endpoint, *args, method=<span class="st">"GET"</span>, **headers):
+    <span class="fn">print</span>(endpoint, args, method, headers)</pre>
+    </div>
+
+    <h3>4.3 Lambda（匿名函数）</h3>
+
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-label label-java">☕ Java Lambda</div>
+        <pre><span class="cm">// Java 8+ lambda</span>
+Comparator&lt;String&gt; comp =
+  (a, b) -> a.length() - b.length();
+
+List&lt;String&gt; words = ...;
+words.sort(comp);</pre>
+      </div>
+      <div class="compare-side">
+        <div class="compare-label label-python">🐍 Python lambda</div>
+        <pre><span class="cm"># lambda 只能写单个表达式</span>
+comp = <span class="kw">lambda</span> a, b: <span class="fn">len</span>(a) - <span class="fn">len</span>(b)
+
+words = [<span class="st">"banana"</span>, <span class="st">"fig"</span>, <span class="st">"apple"</span>]
+words.sort(key=<span class="kw">lambda</span> x: <span class="fn">len</span>(x))
+<span class="cm"># ["fig", "apple", "banana"]</span></pre>
+      </div>
+    </div>
+
+    <h3>4.4 装饰器（Decorator）</h3>
+    <p>装饰器是 Python 的核心特性，等同于 Java 的 AOP（面向切面编程），可以在不修改函数的情况下增强其功能。</p>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre><span class="kw">import</span> time
+<span class="kw">from</span> functools <span class="kw">import</span> wraps
+
+<span class="kw">def</span> <span class="fn">timer</span>(func):
+    <span class="dc">@wraps</span>(func)
+    <span class="kw">def</span> <span class="fn">wrapper</span>(*args, **kwargs):
+        start = time.time()
+        result = <span class="fn">func</span>(*args, **kwargs)
+        elapsed = time.time() - start
+        <span class="fn">print</span>(<span class="st">f"{func.__name__} 耗时: {elapsed:.3f}s"</span>)
+        <span class="kw">return</span> result
+    <span class="kw">return</span> wrapper
+
+<span class="dc">@timer</span>                           <span class="cm"># 语法糖，等价于 heavy = timer(heavy)</span>
+<span class="kw">def</span> <span class="fn">heavy_task</span>():
+    time.sleep(<span class="nb">1</span>)
+    <span class="kw">return</span> <span class="st">"done"</span>
+
+<span class="fn">heavy_task</span>()  <span class="cm"># 自动打印: heavy_task 耗时: 1.001s</span></pre>
+    </div>
+
+    <div class="info-box info-note">
+      <strong>📌 LangChain 关联</strong>
+      LangChain 中的 <code>@tool</code>、<code>@chain</code> 装饰器就是用这个机制实现的，理解装饰器对学习 LangChain 非常重要。
+    </div>
+
+    <h3>4.5 内置高阶函数</h3>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Python</span></div>
+      <pre>nums = [<span class="nb">1</span>, <span class="nb">2</span>, <span class="nb">3</span>, <span class="nb">4</span>, <span class="nb">5</span>]
+
+<span class="cm"># map：对每个元素应用函数（类似 Java Stream.map）</span>
+doubled = <span class="fn">list</span>(<span class="fn">map</span>(<span class="kw">lambda</span> x: x * <span class="nb">2</span>, nums))
+<span class="cm"># [2, 4, 6, 8, 10]</span>
+
+<span class="cm"># filter：过滤（类似 Java Stream.filter）</span>
+evens = <span class="fn">list</span>(<span class="fn">filter</span>(<span class="kw">lambda</span> x: x % <span class="nb">2</span> == <span class="nb">0</span>, nums))
+<span class="cm"># [2, 4]</span>
+
+<span class="cm"># Python 风格：更推荐用列表推导式代替 map/filter</span>
+doubled = [x * <span class="nb">2</span> <span class="kw">for</span> x <span class="kw">in</span> nums]
+evens   = [x <span class="kw">for</span> x <span class="kw">in</span> nums <span class="kw">if</span> x % <span class="nb">2</span> == <span class="nb">0</span>]</pre>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <div class="card-title">Part 1 小结</div>
+      <p style="color:var(--text-dim);font-size:14px;">至此你已掌握 Python 的核心基础。建议在 <code>main.py</code> 中练习以上所有代码片段。下一阶段将学习面向对象、文件操作、异常处理等进阶内容。</p>
+      <br>
+      <p style="color:var(--text-dim);font-size:14px;">告诉我「继续」，将更新 Part 2（第 5-8 章：OOP、模块、文件、异常）。</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('.chapter');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`.nav-link[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
