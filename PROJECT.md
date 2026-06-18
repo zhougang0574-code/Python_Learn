@@ -28,8 +28,8 @@ Python_Learn/
 | 02 | 数据类型 & 容器 | 复习 | ✅ 已完成 | list/dict/set/tuple、推导式 — 练习 5~8 题 |
 | 03 | 控制流 | 复习 | ✅ 已完成 | if/for/while、三元表达式 — 练习 3~5 题 |
 | 04 | 函数 | 复习 | ✅ 已完成 | 参数、默认值、`*args/**kwargs`、lambda — 练习 5~8 题 |
-| 05 | 面向对象编程 | 新学 | 🔶 进行中 | class、继承、魔术方法、`@property`、dataclass，对比 Java 的类/接口 — 完整练习 |
-| 06 | 模块 & 包管理 | 新学 | ⬜ 未开始 | import 机制、`__init__.py`、pip/venv、项目结构，对比 Maven — 完整练习 |
+| 05 | 面向对象编程 | 新学 | ✅ 已完成 | class、继承、魔术方法、`@property`、dataclass，对比 Java 的类/接口 — 完整练习 |
+| 06 | 模块 & 包管理 | 新学 | 🔶 进行中 | import 机制、`__init__.py`、pip/venv、项目结构，对比 Maven — 完整练习 |
 | 07 | 文件操作 & 路径 | 半复习 | ⬜ 未开始 | 基础读写/pathlib/JSON 已掌握不重做；新补 JSONL、CSV、编码处理、`io.StringIO`、递归遍历目录、`.env` 环境变量 — 只对新内容出练习 |
 | 08 | 异常处理进阶 | 半复习 | ⬜ 未开始 | try/except/finally 已掌握；新补自定义异常、`raise...from`、上下文管理器/contextlib — 只对新内容出练习 |
 | 09 | 常用标准库 | 新学 | ⬜ 未开始 | collections、itertools、functools、datetime、re、logging — 完整练习 |

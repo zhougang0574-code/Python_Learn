@@ -3,3 +3,13 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 .idea/
+
+# 06 章 %%writefile 练习生成的演示文件，不是正式代码
+notebooks/06_模块与包管理/math_utils.py
+notebooks/06_模块与包管理/greet.py
+notebooks/06_模块与包管理/mymodule.py
+notebooks/06_模块与包管理/mypkg/
+notebooks/06_模块与包管理/string_utils.py
+notebooks/06_模块与包管理/calc.py
+notebooks/06_模块与包管理/shapes/
+notebooks/06_模块与包管理/tools.py
