@@ -30,10 +30,10 @@ Python_Learn/
 | 04 | 函数 | 复习 | ✅ 已完成 | 参数、默认值、`*args/**kwargs`、lambda — 练习 5~8 题 |
 | 05 | 面向对象编程 | 新学 | ✅ 已完成 | class、继承、魔术方法、`@property`、dataclass，对比 Java 的类/接口 — 完整练习 |
 | 06 | 模块 & 包管理 | 新学 | 🔶 进行中 | import 机制、`__init__.py`、pip/venv、项目结构，对比 Maven — 完整练习 |
-| 07 | 文件操作 & 路径 | 半复习 | ⬜ 未开始 | 基础读写/pathlib/JSON 已掌握不重做；新补 JSONL、CSV、编码处理、`io.StringIO`、递归遍历目录、`.env` 环境变量 — 只对新内容出练习 |
-| 08 | 异常处理进阶 | 半复习 | ⬜ 未开始 | try/except/finally 已掌握；新补自定义异常、`raise...from`、上下文管理器/contextlib — 只对新内容出练习 |
-| 09 | 常用标准库 | 新学 | ⬜ 未开始 | collections、itertools、functools、datetime、re、logging — 完整练习 |
-| 10 | 异步编程 | 新学 | ⬜ 未开始 | asyncio、async/await、协程，对比 Java 并发模型 — 完整练习 |
+| 07 | 文件操作 & 路径 | 半复习 | ⏭️ 跳过 | 知识点（JSONL/CSV/编码处理/`io.StringIO`/递归遍历目录/`.env`）已写好备查；用户判断 LangChain/LangGraph 用不太到原生文件操作，练习暂不做完，先跳到下一章 |
+| 08 | 异常处理进阶 | 半复习 | ✅ 已完成 | try/except/finally 已掌握；新补自定义异常、`raise...from`、上下文管理器/contextlib — 知识点 9 节 + 练习 9 题逐节对应，全部做对 |
+| 09 | 常用标准库 | 新学 | ⏭️ 跳过 | 知识点（collections/itertools/functools/datetime/re/logging，21 节）已看过备查；用户判断这些偏细碎、日常用得少，练习先不做，等以后实际用到再单独学 |
+| 10 | 异步编程 | 新学 | 🔶 进行中 | asyncio、async/await、协程，对比 Java 并发模型 — 知识点已写好并跑过验证；本章不用 ipynb，用 5 个分类的 `.py` 脚本（`notebooks/10_异步编程/01~05_*.py`），避免 `asyncio.run()` 在 Jupyter 里因为已有事件循环而报错的困惑；练习待出 |
 | 11 | 类型注解 & 函数签名精讲 | 新学 | ⬜ 未开始 | type hints、`Optional/Union/Callable`、`*args/**kwargs` 在定义和调用两端的规则、位置/关键字参数、`inspect.signature()` 查看任意函数的参数要求 — 完整练习，目标是看懂任意第三方库的函数签名 |
 
 ### 学习方式

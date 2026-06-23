@@ -13,3 +13,22 @@ notebooks/06_模块与包管理/string_utils.py
 notebooks/06_模块与包管理/calc.py
 notebooks/06_模块与包管理/shapes/
 notebooks/06_模块与包管理/tools.py
+
+# 07 章练习运行时生成的数据文件，不是正式代码
+notebooks/07_文件操作/employees.csv
+notebooks/07_文件操作/orders.jsonl
+notebooks/07_文件操作/users2.csv
+notebooks/07_文件操作/users.csv
+notebooks/07_文件操作/config.json
+notebooks/07_文件操作/filtered.json
+notebooks/07_文件操作/result.json
+notebooks/07_文件操作/test.txt
+notebooks/07_文件操作/output.txt
+notebooks/07_文件操作/write.txt
+notebooks/07_文件操作/data.jsonl
+notebooks/07_文件操作/gbk_*.txt
+notebooks/07_文件操作/logs/
+notebooks/07_文件操作/contacts.json
+
+# 08 章知识点演示运行时生成的文件
+notebooks/08_异常处理进阶/knowledge_demo.txt
