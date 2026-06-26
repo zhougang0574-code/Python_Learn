@@ -34,7 +34,7 @@ Python_Learn/
 | 08 | 异常处理进阶 | 半复习 | ✅ 已完成 | try/except/finally 已掌握；新补自定义异常、`raise...from`、上下文管理器/contextlib — 知识点 9 节 + 练习 9 题逐节对应，全部做对 |
 | 09 | 常用标准库 | 新学 | ⏭️ 跳过 | 知识点（collections/itertools/functools/datetime/re/logging，21 节）已看过备查；用户判断这些偏细碎、日常用得少，练习先不做，等以后实际用到再单独学 |
 | 10 | 异步编程 | 新学 | 🔶 进行中 | asyncio、async/await、协程，对比 Java 并发模型 — 知识点已写好并跑过验证；本章不用 ipynb，用 5 个分类的 `.py` 脚本（`notebooks/10_异步编程/01~05_*.py`），避免 `asyncio.run()` 在 Jupyter 里因为已有事件循环而报错的困惑；练习待出 |
-| 11 | 类型注解 & 函数签名精讲 | 新学 | ⬜ 未开始 | type hints、`Optional/Union/Callable`、`*args/**kwargs` 在定义和调用两端的规则、位置/关键字参数、`inspect.signature()` 查看任意函数的参数要求 — 完整练习，目标是看懂任意第三方库的函数签名 |
+| 11 | 类型注解 & 函数签名精讲 | 新学 | 🔶 进行中 | type hints、`Optional/Union/Callable`、`*args/**kwargs` 在定义和调用两端的规则、位置/关键字参数、`inspect.signature()` 查看任意函数的参数要求 — 知识点（9节）+ 练习（8题）已出，待用户完成练习 |
 
 ### 学习方式
 

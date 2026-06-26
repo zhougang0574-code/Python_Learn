@@ -4,10 +4,9 @@
 """
 import asyncio
 import time
-from unittest import result
 
 
-async def fetch(name,seconds):
+async def fetch(name, seconds):
     print(f"{name} 开始")
     await asyncio.sleep(seconds)
     return f"{name} 完成"
@@ -24,18 +23,17 @@ async def exercise_1():
     测试步骤：
     1. 调用 fetch("订单", 1)，不要 await，先打印它的类型，验证此时函数体还没真正执行
        （应该打印不出 "订单 开始"，因为协程对象还没交给事件循环）
-    2. 再用 asyncio.run() 或 await 把这个协程对象真正执行起来，打印返回值
+    2. 再用 await 把这个协程对象真正执行起来，打印返回值
        期望输出：
        <class 'coroutine'>
        订单 开始
        订单 完成
     """
     # 在这里写你的代码
-    f = fetch("订单",1)
+    f = fetch("订单", 1)
     print(type(f))
-    result = await f
+    result = await f    # await 会返回协程的返回值，要用变量接住
     print(result)
-
 
 async def exercise_2():
     """
@@ -53,5 +51,3 @@ async def exercise_2():
 
 if __name__ == "__main__":
     asyncio.run(exercise_1())
-    print()
-    # asyncio.run(exercise_2())
